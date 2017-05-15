@@ -512,10 +512,10 @@ void NewVars::Loop(TString outputfile, int option){
       FQposMu[i] = fqpmgpos1[0][i];
       FQposGamma[i] = fqpmgpos2[0][i];
       FQposEl[i] = fq1rpos[1][1][i];
-      FQdistSR += pow(fq1rpos[0][2][i] - fqpmgpos[0][1], 2);
+      FQdistSR += pow(fq1rpos[0][2][i] - fqpmgpos1[0][i], 2);
     }
 
-    FQdistSR[i] = sqrt(FQdistSR[i]);
+    FQdistSR = sqrt(FQdistSR);
 
     recmomMu.SetX(FQmomMu[0]);
     recmomMu.SetY(FQmomMu[1]);
