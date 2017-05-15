@@ -126,6 +126,7 @@ void NewVars::Loop(TString outputfile, int option){
   float MCimpact;
   float FQimpact;
   float SRimpact;
+  float FQdistSR;
 
   // Momenta
   float MCmomK[3];
@@ -222,6 +223,7 @@ void NewVars::Loop(TString outputfile, int option){
   treePDK->Branch("MCimpact", &MCimpact, "MCimpact/F");
   treePDK->Branch("FQimpact", &FQimpact, "FQimpact/F");
   treePDK->Branch("SRimpact", &SRimpact, "SRimpact/F");
+  treePDK->Branch("FQdistSR", &FQdistSR, "FQdistSR/F");
 
   treePDK->Branch("MCDeltaT", &MCDeltaT, "MCDeltaT/F");
   treePDK->Branch("FQDeltaT", &FQDeltaT, "FQDeltaT/F");
@@ -502,6 +504,7 @@ void NewVars::Loop(TString outputfile, int option){
     FQtimeGamma = fqpmgt02[0];
     FQDeltaT = FQtimeMu-FQtimeGamma;
 
+    FQdistSR = 0;
     for (int i = 0; i < 3; i++){
       FQmomMu[i] = fqpmgmom1[0]*fqpmgdir1[0][i];
       FQmomEl[i] = fq1rmom[1][1]*fq1rdir[1][1][i];
@@ -509,7 +512,10 @@ void NewVars::Loop(TString outputfile, int option){
       FQposMu[i] = fqpmgpos1[0][i];
       FQposGamma[i] = fqpmgpos2[0][i];
       FQposEl[i] = fq1rpos[1][1][i];
+      FQdistSR += pow(fq1rpos[0][2][i] - fqpmgpos[0][1], 2);
     }
+
+    FQdistSR[i] = sqrt(FQdistSR[i]);
 
     recmomMu.SetX(FQmomMu[0]);
     recmomMu.SetY(FQmomMu[1]);
